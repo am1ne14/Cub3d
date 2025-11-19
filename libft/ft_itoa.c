@@ -3,55 +3,59 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaybi <mtaybi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bamdjar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/30 05:22:58 by mtaybi            #+#    #+#             */
-/*   Updated: 2025/08/23 03:41:17 by mtaybi           ###   ########.fr       */
+/*   Created: 2024/11/03 11:34:22 by bamdjar           #+#    #+#             */
+/*   Updated: 2024/11/06 21:48:57 by bamdjar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	len(int n)
+static size_t	finalsize(int nb)
 {
-	size_t	len;
+	size_t	size;
+	long	nbr;
 
-	len = 0;
-	if (n <= 0)
-		len = 1;
-	while (n != 0)
+	nbr = nb;
+	size = 0;
+	if (nbr == 0)
+		return (1);
+	if (nb < 0)
+		nbr = -nbr;
+	while (nbr > 0)
 	{
-		n /= 10;
-		len++;
+		nbr /= 10;
+		size++;
 	}
-	return (len);
+	return (size + (nb < 0));
 }
 
 char	*ft_itoa(int n)
 {
-	char	*str;
-	size_t	i;
-	long	h;
+	char	*result;
+	size_t	size;
+	long	nbr;
 
-	h = n;
-	i = len(n);
-	str = (char *)malloc(sizeof(char) * (i + 1));
-	if (!(str))
+	size = finalsize(n);
+	nbr = n;
+	if (n == 0)
+	{
+		result = (char *)ft_calloc(sizeof(char), 2);
+		result[0] = '0';
+		return (result);
+	}
+	result = (char *)ft_calloc(sizeof(char), size + 1);
+	if (!result)
 		return (NULL);
-	str[i] = '\0';
-	if (h == 0)
+	if (nbr < 0)
+		nbr = nbr * (-1);
+	while (size--)
 	{
-		str[0] = '0';
+		result[size] = (nbr % 10) + 48;
+		nbr /= 10;
 	}
-	if (h < 0)
-	{
-		str[0] = '-';
-		h = -h;
-	}
-	while (h > 0)
-	{
-		str[--i] = h % 10 + '0';
-		h = h / 10;
-	}
-	return (str);
+	if (n < 0)
+		result[0] = '-';
+	return (result);
 }

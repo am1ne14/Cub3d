@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaybi <mtaybi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 02:31:34 by mtaybi            #+#    #+#             */
-/*   Updated: 2025/09/12 21:25:21 by mohel-am         ###   ########.fr       */
+/*   Updated: 2025/11/19 23:17:36 by bamdjar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define CUB3D_H
 
 # include "../libft/libft.h"
-#include "../minilibx-linux/mlx.h"
+# include "../minilibx-linux/mlx.h"
+# include "../includes/get_next_line.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>

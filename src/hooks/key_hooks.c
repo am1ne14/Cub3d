@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   key_hooks.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/19 23:37:51 by bamdjar           #+#    #+#             */
+/*   Updated: 2025/11/19 23:40:07 by bamdjar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
 int	close_window(t_mlx *mlx)
@@ -20,10 +32,9 @@ int	key_press(int keycode, t_mlx *mlx)
 		move_player_left(mlx);
 	else if (keycode == 100)
 		move_player_right(mlx);
-	else if (keycode == 65361)
-		rotate_player_left(mlx);
 	else if (keycode == 65363)
+		rotate_player_left(mlx);
+	else if (keycode == 65361)
 		rotate_player_right(mlx);
 	return (0);
 }
-

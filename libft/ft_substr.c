@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtaybi <mtaybi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bamdjar <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/29 01:23:50 by mtaybi            #+#    #+#             */
-/*   Updated: 2025/08/23 03:37:38 by mtaybi           ###   ########.fr       */
+/*   Created: 2024/11/02 08:15:56 by bamdjar           #+#    #+#             */
+/*   Updated: 2024/11/02 13:48:08 by bamdjar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,20 @@
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
-	char	*dest;
-	size_t	j;
+	char	*tab;
 
 	if (!s)
 		return (NULL);
-	j = ft_strlen(s) - (size_t)start;
 	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (len < j)
-		j = len;
-	dest = (char *)malloc(sizeof(char) * (j + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (i < j)
+		return (ft_calloc(1, sizeof(char)));
+	i = ft_strlen(s + start);
+	if (i < len)
 	{
-		dest[i] = s[start + i];
-		i++;
+		len = i;
 	}
-	dest[i] = '\0';
-	return (dest);
+	tab = ft_calloc(len + 1, sizeof(char));
+	if (!tab)
+		return (NULL);
+	ft_strlcpy(tab, s + start, len + 1);
+	return (tab);
 }

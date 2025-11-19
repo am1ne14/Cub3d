@@ -1,3 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/11/19 23:36:48 by bamdjar           #+#    #+#             */
+/*   Updated: 2025/11/19 23:36:50 by bamdjar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../../includes/cub3d.h"
 
 static void	init_ray(t_mlx *mlx, t_ray *ray, int x)
@@ -118,7 +131,7 @@ void	draw_vertical_line(t_mlx *mlx, int x, t_ray *ray)
 	step = 1.0 * mlx->texture_height[ray->tex_num] / ray->line_height;
 	tex_pos = (ray->draw_start - mlx->win_height / 2 + ray->line_height / 2) * step;
 	y = ray->draw_start;
-	while (y < ray->draw_end)
+	while (y <= ray->draw_end)
 	{
 		tex_y = (int)tex_pos & (mlx->texture_height[ray->tex_num] - 1);
 		tex_pos += step;
