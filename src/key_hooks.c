@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/cub3d.h"
+#include "../includes/cub3d.h"
 
 int	close_window(t_mlx *mlx)
 {

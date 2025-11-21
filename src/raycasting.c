@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 
-#include "../../includes/cub3d.h"
+#include "../includes/cub3d.h"
 
 static void	init_ray(t_mlx *mlx, t_ray *ray, int x)
 {
