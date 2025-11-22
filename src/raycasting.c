@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../includes/cub3d.h"
 
 static void	init_ray(t_mlx *mlx, t_ray *ray, int x)
@@ -79,11 +78,11 @@ static void	perform_dda(t_mlx *mlx, t_ray *ray)
 static void	calculate_wall_distance(t_mlx *mlx, t_ray *ray)
 {
 	if (ray->side == 0)
-		ray->perp_wall_dist = (ray->map_x - mlx->player.pos_x + 
-			(1 - ray->step_x) / 2) / ray->ray_dir_x;
+		ray->perp_wall_dist = (ray->map_x - mlx->player.pos_x
+				+ (1 - ray->step_x) / 2) / ray->ray_dir_x;
 	else
-		ray->perp_wall_dist = (ray->map_y - mlx->player.pos_y + 
-			(1 - ray->step_y) / 2) / ray->ray_dir_y;
+		ray->perp_wall_dist = (ray->map_y - mlx->player.pos_y
+				+ (1 - ray->step_y) / 2) / ray->ray_dir_y;
 	ray->line_height = (int)(mlx->win_height / ray->perp_wall_dist);
 	ray->draw_start = -ray->line_height / 2 + mlx->win_height / 2;
 	if (ray->draw_start < 0)
@@ -115,8 +114,8 @@ static void	calculate_texture_coordinates(t_mlx *mlx, t_ray *ray)
 			ray->tex_num = 0;
 	}
 	ray->tex_x = (int)(ray->wall_x * (double)mlx->texture_width[ray->tex_num]);
-	if ((ray->side == 0 && ray->ray_dir_x > 0) || 
-		(ray->side == 1 && ray->ray_dir_y < 0))
+	if ((ray->side == 0 && ray->ray_dir_x > 0)
+		|| (ray->side == 1 && ray->ray_dir_y < 0))
 		ray->tex_x = mlx->texture_width[ray->tex_num] - ray->tex_x - 1;
 }
 
@@ -129,7 +128,8 @@ void	draw_vertical_line(t_mlx *mlx, int x, t_ray *ray)
 	unsigned int	color;
 
 	step = 1.0 * mlx->texture_height[ray->tex_num] / ray->line_height;
-	tex_pos = (ray->draw_start - mlx->win_height / 2 + ray->line_height / 2) * step;
+	tex_pos = (ray->draw_start - mlx->win_height / 2
+			+ ray->line_height / 2) * step;
 	y = ray->draw_start;
 	while (y <= ray->draw_end)
 	{

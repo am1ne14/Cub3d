@@ -37,14 +37,14 @@ $(NAME): $(OBJ) $(OBJG) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR)
 
 clean:
-	@make -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(LIBFT_DIR) clean
 	rm -f $(OBJ) $(OBJG)
 
 fclean: clean
-	@make -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 
 re: fclean all

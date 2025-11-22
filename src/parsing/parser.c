@@ -37,20 +37,41 @@ int	validate_arguments(int ac, char **av)
 
 static int	is_texture_identifier(char *line)
 {
-	return (ft_strncmp(line, "NO ", 3) == 0 || 
-			ft_strncmp(line, "SO ", 3) == 0 ||
-			ft_strncmp(line, "WE ", 3) == 0 || 
-			ft_strncmp(line, "EA ", 3) == 0);
+	return (ft_strncmp(line, "NO ", 3) == 0
+		|| ft_strncmp(line, "SO ", 3) == 0
+		|| ft_strncmp(line, "WE ", 3) == 0
+		|| ft_strncmp(line, "EA ", 3) == 0);
 }
 
 static int	is_color_identifier(char *line)
 {
-	return (ft_strncmp(line, "F ", 2) == 0 || ft_strncmp(line, "C ", 2) == 0);
+	return (ft_strncmp(line, "F ", 2) == 0
+		|| ft_strncmp(line, "C ", 2) == 0);
+}
+
+static int	handle_texture_line(char *trimmed_line, t_game_map *game_map)
+{
+	if (!handle_texture_config(trimmed_line, game_map))
+	{
+		free(trimmed_line);
+		return (0);
+	}
+	return (1);
+}
+
+static int	handle_color_line(char *trimmed_line, t_game_map *game_map)
+{
+	if (!handle_color_config(trimmed_line, game_map))
+	{
+		free(trimmed_line);
+		return (0);
+	}
+	return (1);
 }
 
 static int	process_config_line(char *line, t_game_map *game_map)
 {
-	char *trimmed_line;
+	char	*trimmed_line;
 
 	trimmed_line = trim_line_spaces(line);
 	if (!trimmed_line || ft_strlen(trimmed_line) == 0)
@@ -60,24 +81,18 @@ static int	process_config_line(char *line, t_game_map *game_map)
 	}
 	if (is_texture_identifier(trimmed_line))
 	{
-		if (!handle_texture_config(trimmed_line, game_map))
-		{
-			free(trimmed_line);
+		if (!handle_texture_line(trimmed_line, game_map))
 			return (0);
-		}
 	}
 	else if (is_color_identifier(trimmed_line))
 	{
-		if (!handle_color_config(trimmed_line, game_map))
-		{
-			free(trimmed_line);
+		if (!handle_color_line(trimmed_line, game_map))
 			return (0);
-		}
 	}
 	else if (check_valid_map_character(trimmed_line[0]))
 	{
 		free(trimmed_line);
-		return (2); // Start of map found
+		return (2);
 	}
 	free(trimmed_line);
 	return (1);
@@ -104,6 +119,21 @@ static int	init_map_grid(t_game_map *game_map, char *trimmed, int fd)
 	return (1);
 }
 
+static int	process_first_map_line(char *trimmed, t_game_map *game_map, int fd)
+{
+	if (trimmed && ft_strlen(trimmed) > 0)
+	{
+		if (!init_map_grid(game_map, trimmed, fd))
+			return (0);
+	}
+	else
+	{
+		if (trimmed)
+			free(trimmed);
+	}
+	return (1);
+}
+
 static int	handle_map_start(char *line, t_game_map *game_map, int fd)
 {
 	char	*trimmed;
@@ -117,16 +147,8 @@ static int	handle_map_start(char *line, t_game_map *game_map, int fd)
 	}
 	trimmed = trim_line_spaces(line);
 	free(line);
-	if (trimmed && ft_strlen(trimmed) > 0)
-	{
-		if (!init_map_grid(game_map, trimmed, fd))
-			return (0);
-	}
-	else
-	{
-		if (trimmed)
-			free(trimmed);
-	}
+	if (!process_first_map_line(trimmed, game_map, fd))
+		return (0);
 	if (!process_map_data(fd, game_map))
 	{
 		close(fd);
@@ -195,5 +217,5 @@ int	parsing(int ac, char *av[], t_game_map *game_map)
 		cleanup_game_map(game_map);
 		return (0);
 	}
-    return (1);
+	return (1);
 }

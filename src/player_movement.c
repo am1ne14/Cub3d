@@ -7,8 +7,8 @@ int	is_wall(t_mlx *mlx, double x, double y)
 
 	map_x = (int)x;
 	map_y = (int)y;
-	if (map_x < 0 || map_x >= mlx->game_map->map_width || 
-		map_y < 0 || map_y >= mlx->game_map->map_height)
+	if (map_x < 0 || map_x >= mlx->game_map->map_width
+		|| map_y < 0 || map_y >= mlx->game_map->map_height)
 		return (1);
 	return (mlx->game_map->map_grid[map_y][map_x] == '1');
 }
@@ -71,15 +71,15 @@ void	rotate_player_left(t_mlx *mlx)
 	double	old_plane_x;
 
 	old_dir_x = mlx->player.dir_x;
-	mlx->player.dir_x = mlx->player.dir_x * cos(ROT_SPEED) - 
-		mlx->player.dir_y * sin(ROT_SPEED);
-	mlx->player.dir_y = old_dir_x * sin(ROT_SPEED) + 
-		mlx->player.dir_y * cos(ROT_SPEED);
+	mlx->player.dir_x = mlx->player.dir_x * cos(ROT_SPEED)
+		- mlx->player.dir_y * sin(ROT_SPEED);
+	mlx->player.dir_y = old_dir_x * sin(ROT_SPEED)
+		+ mlx->player.dir_y * cos(ROT_SPEED);
 	old_plane_x = mlx->player.plane_x;
-	mlx->player.plane_x = mlx->player.plane_x * cos(ROT_SPEED) - 
-		mlx->player.plane_y * sin(ROT_SPEED);
-	mlx->player.plane_y = old_plane_x * sin(ROT_SPEED) + 
-		mlx->player.plane_y * cos(ROT_SPEED);
+	mlx->player.plane_x = mlx->player.plane_x * cos(ROT_SPEED)
+		- mlx->player.plane_y * sin(ROT_SPEED);
+	mlx->player.plane_y = old_plane_x * sin(ROT_SPEED)
+		+ mlx->player.plane_y * cos(ROT_SPEED);
 }
 
 void	rotate_player_right(t_mlx *mlx)
@@ -88,13 +88,13 @@ void	rotate_player_right(t_mlx *mlx)
 	double	old_plane_x;
 
 	old_dir_x = mlx->player.dir_x;
-	mlx->player.dir_x = mlx->player.dir_x * cos(-ROT_SPEED) - 
-		mlx->player.dir_y * sin(-ROT_SPEED);
-	mlx->player.dir_y = old_dir_x * sin(-ROT_SPEED) + 
-		mlx->player.dir_y * cos(-ROT_SPEED);
+	mlx->player.dir_x = mlx->player.dir_x * cos(-ROT_SPEED)
+		- mlx->player.dir_y * sin(-ROT_SPEED);
+	mlx->player.dir_y = old_dir_x * sin(-ROT_SPEED)
+		+ mlx->player.dir_y * cos(-ROT_SPEED);
 	old_plane_x = mlx->player.plane_x;
-	mlx->player.plane_x = mlx->player.plane_x * cos(-ROT_SPEED) - 
-		mlx->player.plane_y * sin(-ROT_SPEED);
-	mlx->player.plane_y = old_plane_x * sin(-ROT_SPEED) + 
-		mlx->player.plane_y * cos(-ROT_SPEED);
+	mlx->player.plane_x = mlx->player.plane_x * cos(-ROT_SPEED)
+		- mlx->player.plane_y * sin(-ROT_SPEED);
+	mlx->player.plane_y = old_plane_x * sin(-ROT_SPEED)
+		+ mlx->player.plane_y * cos(-ROT_SPEED);
 }
