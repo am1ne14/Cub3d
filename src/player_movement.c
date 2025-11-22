@@ -64,37 +64,3 @@ void	move_player_right(t_mlx *mlx)
 	if (!is_wall(mlx, mlx->player.pos_x, new_y))
 		mlx->player.pos_y = new_y;
 }
-
-void	rotate_player_left(t_mlx *mlx)
-{
-	double	old_dir_x;
-	double	old_plane_x;
-
-	old_dir_x = mlx->player.dir_x;
-	mlx->player.dir_x = mlx->player.dir_x * cos(ROT_SPEED)
-		- mlx->player.dir_y * sin(ROT_SPEED);
-	mlx->player.dir_y = old_dir_x * sin(ROT_SPEED)
-		+ mlx->player.dir_y * cos(ROT_SPEED);
-	old_plane_x = mlx->player.plane_x;
-	mlx->player.plane_x = mlx->player.plane_x * cos(ROT_SPEED)
-		- mlx->player.plane_y * sin(ROT_SPEED);
-	mlx->player.plane_y = old_plane_x * sin(ROT_SPEED)
-		+ mlx->player.plane_y * cos(ROT_SPEED);
-}
-
-void	rotate_player_right(t_mlx *mlx)
-{
-	double	old_dir_x;
-	double	old_plane_x;
-
-	old_dir_x = mlx->player.dir_x;
-	mlx->player.dir_x = mlx->player.dir_x * cos(-ROT_SPEED)
-		- mlx->player.dir_y * sin(-ROT_SPEED);
-	mlx->player.dir_y = old_dir_x * sin(-ROT_SPEED)
-		+ mlx->player.dir_y * cos(-ROT_SPEED);
-	old_plane_x = mlx->player.plane_x;
-	mlx->player.plane_x = mlx->player.plane_x * cos(-ROT_SPEED)
-		- mlx->player.plane_y * sin(-ROT_SPEED);
-	mlx->player.plane_y = old_plane_x * sin(-ROT_SPEED)
-		+ mlx->player.plane_y * cos(-ROT_SPEED);
-}

@@ -6,12 +6,17 @@ SRC     = src/main.c \
           src/parsing/parser.c \
           src/parsing/check_map.c \
           src/parsing/parse_utils.c \
+          src/parsing/rgb_utils.c \
           src/parsing/config_handler.c \
           src/init_data/init_game_map.c \
-          src/init_data/init_mlx_data.c \
+          src/init_data/texture_utils.c \
+          src/init_data/player_init.c \
+          src/init_data/rendering.c \
           src/key_hooks.c \
           src/raycasting.c \
-          src/player_movement.c
+          src/ray_calculation.c \
+          src/player_movement.c \
+          src/player_rotation.c
 
 SRCG    = get_next_line/get_next_line.c \
           get_next_line/get_next_line_utils.c

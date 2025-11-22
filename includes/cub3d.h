@@ -129,7 +129,13 @@ int			validate_map_line(char *line, t_game_map *game_map, int y);
 void		initialize_game_map(t_game_map *game_map);
 void		cleanup_game_map(t_game_map *game_map);
 char		*trim_line_spaces(char *str);
+char		*find_trim_start(char *str);
+char		*find_trim_end(char *start);
+char		*copy_trimmed_string(char *start, int len);
 int			convert_rgb_string(char *rgb_str, t_rgb_color *color);
+int			count_rgb_parts(char **rgb_parts);
+void		free_rgb_parts(char **rgb_parts);
+int			validate_rgb_values(char **rgb_parts, int *values);
 int			check_all_configs_set(t_game_map *game_map);
 void		display_parse_error(char *message);
 
@@ -140,15 +146,29 @@ int			check_map(char *file);
 /* MLX functions */
 void		init_mlx(t_mlx *mlx, t_game_map *game_map);
 void		init_player(t_mlx *mlx, t_game_map *game_map);
+void		init_player_north(t_mlx *mlx);
+void		init_player_south(t_mlx *mlx);
+void		init_player_east(t_mlx *mlx);
+void		init_player_west(t_mlx *mlx);
 void		load_textures(t_mlx *mlx);
 
 /* Rendering functions */
 int			render_frame(t_mlx *mlx);
+void		render_background(t_mlx *mlx);
+void		draw_ceiling(t_mlx *mlx, int x, int y);
+void		draw_floor(t_mlx *mlx, int x, int y);
 void		cast_rays(t_mlx *mlx);
 void		draw_vertical_line(t_mlx *mlx, int x, t_ray *ray);
 void		put_pixel_to_image(t_mlx *mlx, int x, int y, int color);
 unsigned int	get_texture_color(t_mlx *mlx, int tex_num, int tex_x,
 				int tex_y);
+
+/* Ray calculation functions */
+void		init_ray(t_mlx *mlx, t_ray *ray, int x);
+void		calculate_step_and_side_dist(t_mlx *mlx, t_ray *ray);
+void		perform_dda(t_mlx *mlx, t_ray *ray);
+void		calculate_wall_distance(t_mlx *mlx, t_ray *ray);
+void		calculate_texture_coordinates(t_mlx *mlx, t_ray *ray);
 
 /* Movement functions */
 void		move_player_forward(t_mlx *mlx);
