@@ -6,7 +6,7 @@
 /*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 02:31:34 by mtaybi            #+#    #+#             */
-/*   Updated: 2025/11/19 23:17:36 by bamdjar          ###   ########.fr       */
+/*   Updated: 2025/11/21 22:00:49 by bamdjar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 # include <limits.h>
 # include <math.h>
 
-# define SCREEN_WIDTH 800
-# define SCREEN_HEIGHT 600
+# define SCREEN_WIDTH 1080
+# define SCREEN_HEIGHT 720
 # define FOV 60
-# define MOVE_SPEED 0.05
-# define ROT_SPEED 0.03
+# define MOVE_SPEED 0.5
+# define ROT_SPEED 0.3
 
 typedef struct s_rgb_color
 {

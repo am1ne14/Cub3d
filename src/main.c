@@ -1,5 +1,6 @@
-
 #include "../includes/cub3d.h"
+
+
 
 int main(int arc, char **arv)
 {

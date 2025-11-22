@@ -3,8 +3,8 @@ EA texture/b.xpm
 SO texture/c.xpm
 WE texture/d.xpm
 
-C 255,0,0
-F 255,0,0
+C 135,206,235
+F 55,55,60
 
 111111111111111
 111111010111111
