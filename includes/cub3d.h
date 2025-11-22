@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef CUB3D_H
+#ifndef CUB3D_H
 # define CUB3D_H
 
 # include "../libft/libft.h"
@@ -116,54 +116,73 @@ typedef struct s_mlx
 }	t_mlx;
 
 /* Parsing functions */
-int process_config_file(char *filename, t_game_map *game_map);
-int handle_texture_config(char *line, t_game_map *game_map);
-int handle_color_config(char *line, t_game_map *game_map);
-int process_map_data(int fd, t_game_map *game_map);
-int validate_game_map(t_game_map *game_map);
-int check_valid_map_character(char c);
-int verify_map_boundaries(t_game_map *game_map);
-int validate_map_line(char *line, t_game_map *game_map, int y);
+int			process_config_file(char *filename, t_game_map *game_map);
+int			handle_texture_config(char *line, t_game_map *game_map);
+int			handle_color_config(char *line, t_game_map *game_map);
+int			process_map_data(int fd, t_game_map *game_map);
+int			validate_game_map(t_game_map *game_map);
+int			check_valid_map_character(char c);
+int			verify_map_boundaries(t_game_map *game_map);
+int			validate_map_line(char *line, t_game_map *game_map, int y);
 
 /* Utility functions */
-void initialize_game_map(t_game_map *game_map);
-void cleanup_game_map(t_game_map *game_map);
-char *trim_line_spaces(char *str);
-int convert_rgb_string(char *rgb_str, t_rgb_color *color);
-int check_all_configs_set(t_game_map *game_map);
-void display_parse_error(char *message);
+void		initialize_game_map(t_game_map *game_map);
+void		cleanup_game_map(t_game_map *game_map);
+char		*trim_line_spaces(char *str);
+char		*find_trim_start(char *str);
+char		*find_trim_end(char *start);
+char		*copy_trimmed_string(char *start, int len);
+int			convert_rgb_string(char *rgb_str, t_rgb_color *color);
+int			count_rgb_parts(char **rgb_parts);
+void		free_rgb_parts(char **rgb_parts);
+int			validate_rgb_values(char **rgb_parts, int *values);
+int			check_all_configs_set(t_game_map *game_map);
+void		display_parse_error(char *message);
 
 /* Main parsing */
-int		parsing(int ac, char *av[], t_game_map *game_map);
-int		check_map(char *file);
+int			parsing(int ac, char *av[], t_game_map *game_map);
+int			check_map(char *file);
 
 /* MLX functions */
-void	init_mlx(t_mlx *mlx, t_game_map *game_map);
-void	init_player(t_mlx *mlx, t_game_map *game_map);
-void	load_textures(t_mlx *mlx);
+void		init_mlx(t_mlx *mlx, t_game_map *game_map);
+void		init_player(t_mlx *mlx, t_game_map *game_map);
+void		init_player_north(t_mlx *mlx);
+void		init_player_south(t_mlx *mlx);
+void		init_player_east(t_mlx *mlx);
+void		init_player_west(t_mlx *mlx);
+void		load_textures(t_mlx *mlx);
 
 /* Rendering functions */
-int		render_frame(t_mlx *mlx);
-void	cast_rays(t_mlx *mlx);
-void	draw_vertical_line(t_mlx *mlx, int x, t_ray *ray);
-void	put_pixel_to_image(t_mlx *mlx, int x, int y, int color);
-unsigned int	get_texture_color(t_mlx *mlx, int tex_num, int tex_x, int tex_y);
+int			render_frame(t_mlx *mlx);
+void		render_background(t_mlx *mlx);
+void		draw_ceiling(t_mlx *mlx, int x, int y);
+void		draw_floor(t_mlx *mlx, int x, int y);
+void		cast_rays(t_mlx *mlx);
+void		draw_vertical_line(t_mlx *mlx, int x, t_ray *ray);
+void		put_pixel_to_image(t_mlx *mlx, int x, int y, int color);
+unsigned int	get_texture_color(t_mlx *mlx, int tex_num, int tex_x,
+				int tex_y);
+
+/* Ray calculation functions */
+void		init_ray(t_mlx *mlx, t_ray *ray, int x);
+void		calculate_step_and_side_dist(t_mlx *mlx, t_ray *ray);
+void		perform_dda(t_mlx *mlx, t_ray *ray);
+void		calculate_wall_distance(t_mlx *mlx, t_ray *ray);
+void		calculate_texture_coordinates(t_mlx *mlx, t_ray *ray);
 
 /* Movement functions */
-void	move_player_forward(t_mlx *mlx);
-void	move_player_backward(t_mlx *mlx);
-void	move_player_left(t_mlx *mlx);
-void	move_player_right(t_mlx *mlx);
-void	rotate_player_left(t_mlx *mlx);
-void	rotate_player_right(t_mlx *mlx);
+void		move_player_forward(t_mlx *mlx);
+void		move_player_backward(t_mlx *mlx);
+void		move_player_left(t_mlx *mlx);
+void		move_player_right(t_mlx *mlx);
+void		rotate_player_left(t_mlx *mlx);
+void		rotate_player_right(t_mlx *mlx);
 
 /* Hook functions */
-int		close_window(t_mlx *mlx);
-int		key_press(int keycode, t_mlx *mlx);
+int			close_window(t_mlx *mlx);
+int			key_press(int keycode, t_mlx *mlx);
 
 /* Utils */
-int		is_wall(t_mlx *mlx, double x, double y);
+int			is_wall(t_mlx *mlx, double x, double y);
 
 #endif
-
-
