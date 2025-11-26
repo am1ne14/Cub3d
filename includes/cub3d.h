@@ -23,8 +23,8 @@
 # include <limits.h>
 # include <math.h>
 
-# define SCREEN_WIDTH 1080
-# define SCREEN_HEIGHT 720
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 1080
 # define FOV 60
 # define MOVE_SPEED 0.5
 # define ROT_SPEED 0.3

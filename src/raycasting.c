@@ -45,11 +45,11 @@ void	cast_rays(t_mlx *mlx)
 	while (x < mlx->win_width)
 	{
 		init_ray(mlx, &ray, x);
-		calculate_step_and_side_dist(mlx, &ray);
+		/*calculate_step_and_side_dist(mlx, &ray);
 		perform_dda(mlx, &ray);
 		calculate_wall_distance(mlx, &ray);
 		calculate_texture_coordinates(mlx, &ray);
-		draw_vertical_line(mlx, x, &ray);
+		draw_vertical_line(mlx, x, &ray);*/
 		x++;
 	}
 }

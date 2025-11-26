@@ -71,14 +71,23 @@ void	init_mlx(t_mlx *mlx, t_game_map *game_map)
 	mlx->game_map = game_map;
 	load_textures(mlx);
 	init_player(mlx, game_map);
+	printf("HERE IA M");
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->win_width,
 			mlx->win_height, "cub3D");
 	if (!mlx->win_ptr)
-		exit(EXIT_FAILURE);
+	{
+		mlx_destroy_display(mlx->mlx_ptr);
+		free(mlx->mlx_ptr);	exit(EXIT_FAILURE);
+	}
 	mlx->img_ptr = mlx_new_image(mlx->mlx_ptr, mlx->win_width,
 			mlx->win_height);
 	if (!mlx->img_ptr)
+	{
+		mlx_destroy_display(mlx->mlx_ptr);
+		free(mlx->mlx_ptr);
+		mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
 		exit(EXIT_FAILURE);
+	}
 	mlx->img_data = mlx_get_data_addr(mlx->img_ptr, &mlx->bits_per_pixel,
 			&mlx->line_length, &mlx->endian);
 	mlx_hook(mlx->win_ptr, 2, 1L << 0, key_press, mlx);
