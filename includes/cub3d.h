@@ -17,8 +17,8 @@
 # include "mlx.h"
 # include "../includes/get_next_line.h"
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
 # include <math.h>

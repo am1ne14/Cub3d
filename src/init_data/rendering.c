@@ -71,7 +71,6 @@ void	init_mlx(t_mlx *mlx, t_game_map *game_map)
 	mlx->game_map = game_map;
 	load_textures(mlx);
 	init_player(mlx, game_map);
-	printf("HERE IA M");
 	mlx->win_ptr = mlx_new_window(mlx->mlx_ptr, mlx->win_width,
 			mlx->win_height, "cub3D");
 	if (!mlx->win_ptr)
