@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_calculation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bamdjar <bamdjar@student.1337.ma>                +#+  +:+       +#+        */
+/*   By: mohel-am <mohel-am@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 15:30:00 by bamdjar           #+#    #+#             */
-/*   Updated: 2025/11/22 15:30:00 by bamdjar          ###   ########.fr       */
+/*   Created: 2025/12/26 14:39:18 by mohel-am          #+#    #+#             */
+/*   Updated: 2025/12/26 14:39:22 by mohel-am         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,20 @@ void	calculate_step_and_side_dist(t_mlx *mlx, t_ray *ray)
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - mlx->player.pos_x) * ray->delta_dist_x;
+		ray->side_dist_x = (ray->map_x + 1.0 - mlx->player.pos_x)
+			* ray->delta_dist_x;
 	}
 	if (ray->ray_dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (mlx->player.pos_y - ray->map_y) * ray->delta_dist_y;
+		ray->side_dist_y = (mlx->player.pos_y - ray->map_y)
+			* ray->delta_dist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - mlx->player.pos_y) * ray->delta_dist_y;
+		ray->side_dist_y = (ray->map_y + 1.0 - mlx->player.pos_y)
+			* ray->delta_dist_y;
 	}
 }
 
@@ -100,19 +103,9 @@ void	calculate_texture_coordinates(t_mlx *mlx, t_ray *ray)
 		ray->wall_x = mlx->player.pos_x + ray->perp_wall_dist * ray->ray_dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 	if (ray->side == 0)
-	{
-		if (ray->ray_dir_x > 0)
-			ray->tex_num = 2;
-		else
-			ray->tex_num = 3;
-	}
+		ray->tex_num = 3 - (ray->ray_dir_x > 0);
 	else
-	{
-		if (ray->ray_dir_y > 0)
-			ray->tex_num = 1;
-		else
-			ray->tex_num = 0;
-	}
+		ray->tex_num = (ray->ray_dir_y > 0);
 	ray->tex_x = (int)(ray->wall_x * (double)mlx->texture_width[ray->tex_num]);
 	if ((ray->side == 0 && ray->ray_dir_x > 0)
 		|| (ray->side == 1 && ray->ray_dir_y < 0))

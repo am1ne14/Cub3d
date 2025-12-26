@@ -3,11 +3,23 @@ CC      = cc
 CFLAGS  = -g -Wall -Wextra -Werror
 
 SRC     = src/main.c \
+          src/game_loop.c \
           src/parsing/parser.c \
           src/parsing/check_map.c \
-          src/parsing/parse_utils.c \
           src/parsing/rgb_utils.c \
-          src/parsing/config_handler.c \
+          src/parsing/parsing_args.c \
+          src/parsing/config_parsing.c \
+          src/parsing/config_textures.c \
+          src/parsing/config_textures_utils.c \
+          src/parsing/config_colors.c \
+          src/parsing/config_utils.c \
+          src/parsing/config_check.c \
+          src/parsing/trim_utils.c \
+          src/parsing/parse_cleanup.c \
+          src/parsing/parsing_map_init.c \
+          src/parsing/map_verification.c \
+          src/parsing/map_loading.c \
+          src/init_data/init_mlx.c \
           src/init_data/init_game_map.c \
           src/init_data/texture_utils.c \
           src/init_data/player_init.c \
@@ -29,7 +41,7 @@ LIBFT     = $(LIBFT_DIR)/libft.a
 
 MINILIBX_DIR = /usr/include/minilibx-linux
 
-INCLUDES  = -Iinclude -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
+INCLUDES  = -Iincludes -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
 
 LIBS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lz
 

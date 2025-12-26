@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   texture_utils.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bamdjar <bamdjar@student.1337.ma>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/22 15:30:00 by bamdjar           #+#    #+#             */
-/*   Updated: 2025/11/22 15:30:00 by bamdjar          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
@@ -60,6 +49,6 @@ unsigned int	get_texture_color(t_mlx *mlx, int tex_num, int tex_x, int tex_y)
 		return (0);
 	pixel = mlx->texture_data[tex_num]
 		+ (tex_y * mlx->tex_line_length[tex_num] + tex_x
-		* (mlx->tex_bits_per_pixel[tex_num] / 8));
+			* (mlx->tex_bits_per_pixel[tex_num] / 8));
 	return (*(unsigned int *)pixel);
 }

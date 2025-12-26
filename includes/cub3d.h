@@ -17,8 +17,8 @@
 # include "mlx.h"
 # include "../includes/get_next_line.h"
 # include <fcntl.h>
-# include <stdlib.h>
 # include <stdio.h>
+# include <stdlib.h>
 # include <unistd.h>
 # include <limits.h>
 # include <math.h>
@@ -26,8 +26,8 @@
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define FOV 60
-# define MOVE_SPEED 0.5
-# define ROT_SPEED 0.3
+# define MOVE_SPEED 0.05
+# define ROT_SPEED 0.03
 
 typedef struct s_rgb_color
 {
@@ -113,31 +113,53 @@ typedef struct s_mlx
 	int			tex_bits_per_pixel[4];
 	int			tex_line_length[4];
 	int			tex_endian[4];
+	int			key_w;
+	int			key_s;
+	int			key_a;
+	int			key_d;
+	int			key_left;
+	int			key_right;
 }	t_mlx;
 
 /* Parsing functions */
+/* Parsing functions */
+int			parsing(int ac, char *av[], t_game_map *game_map);
+int			validate_arguments(int ac, char **av);
+
+/* Config parsing */
 int			process_config_file(char *filename, t_game_map *game_map);
+int			process_config_line(char *line, t_game_map *game_map);
+int			handle_map_start(char *line, t_game_map *game_map, int fd);
+int			check_all_configs_set(t_game_map *game_map);
+
+/* Texture & Color handlers */
+int			store_texture_path(char *identifier, char *path,
+				t_game_map *game_map);
 int			handle_texture_config(char *line, t_game_map *game_map);
 int			handle_color_config(char *line, t_game_map *game_map);
+int			validate_texture_parts(char **parts);
+int			validate_color_parts(char **parts);
+int			is_texture_identifier(char *line);
+int			is_color_identifier(char *line);
+void		free_split_parts(char **parts);
+
+/* Map parsing */
+int			check_map(char *file);
 int			process_map_data(int fd, t_game_map *game_map);
 int			validate_game_map(t_game_map *game_map);
+int			validate_map_line(char *line, t_game_map *game_map, int y);
 int			check_valid_map_character(char c);
 int			verify_map_boundaries(t_game_map *game_map);
-int			validate_map_line(char *line, t_game_map *game_map, int y);
 
 /* Utility functions */
 void		initialize_game_map(t_game_map *game_map);
 void		cleanup_game_map(t_game_map *game_map);
+void		display_parse_error(char *message);
 char		*trim_line_spaces(char *str);
 char		*find_trim_start(char *str);
 char		*find_trim_end(char *start);
 char		*copy_trimmed_string(char *start, int len);
 int			convert_rgb_string(char *rgb_str, t_rgb_color *color);
-int			count_rgb_parts(char **rgb_parts);
-void		free_rgb_parts(char **rgb_parts);
-int			validate_rgb_values(char **rgb_parts, int *values);
-int			check_all_configs_set(t_game_map *game_map);
-void		display_parse_error(char *message);
 
 /* Main parsing */
 int			parsing(int ac, char *av[], t_game_map *game_map);
@@ -161,7 +183,7 @@ void		cast_rays(t_mlx *mlx);
 void		draw_vertical_line(t_mlx *mlx, int x, t_ray *ray);
 void		put_pixel_to_image(t_mlx *mlx, int x, int y, int color);
 unsigned int	get_texture_color(t_mlx *mlx, int tex_num, int tex_x,
-				int tex_y);
+					int tex_y);
 
 /* Ray calculation functions */
 void		init_ray(t_mlx *mlx, t_ray *ray, int x);
@@ -181,6 +203,8 @@ void		rotate_player_right(t_mlx *mlx);
 /* Hook functions */
 int			close_window(t_mlx *mlx);
 int			key_press(int keycode, t_mlx *mlx);
+int			key_release(int keycode, t_mlx *mlx);
+int			game_loop(t_mlx *mlx);
 
 /* Utils */
 int			is_wall(t_mlx *mlx, double x, double y);
