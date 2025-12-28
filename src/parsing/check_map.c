@@ -5,13 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/19 23:37:00 by bamdjar           #+#    #+#             */
-/*   Updated: 2025/11/19 23:37:01 by bamdjar          ###   ########.fr       */
+/*   Created: 2025/12/28 21:21:53 by bamdjar           #+#    #+#             */
+/*   Updated: 2025/12/28 21:49:43 by bamdjar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-	
+
 int	check_valid_map_character(char c)
 {
 	return (c == '0' || c == '1' || c == 'N'

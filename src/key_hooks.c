@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_hooks.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mohel-am <mohel-am@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 14:38:12 by mohel-am          #+#    #+#             */
-/*   Updated: 2025/12/26 14:38:15 by mohel-am         ###   ########.fr       */
+/*   Updated: 2025/12/28 21:43:01 by bamdjar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	key_press(int keycode, t_mlx *mlx)
 	else if (keycode == 100)
 		mlx->key_d = 1;
 	else if (keycode == 65363)
-		mlx->key_right = 1;
-	else if (keycode == 65361)
 		mlx->key_left = 1;
+	else if (keycode == 65361)
+		mlx->key_right = 1;
 	return (0);
 }
 
@@ -50,8 +50,8 @@ int	key_release(int keycode, t_mlx *mlx)
 	else if (keycode == 100)
 		mlx->key_d = 0;
 	else if (keycode == 65363)
-		mlx->key_right = 0;
-	else if (keycode == 65361)
 		mlx->key_left = 0;
+	else if (keycode == 65361)
+		mlx->key_right = 0;
 	return (0);
 }

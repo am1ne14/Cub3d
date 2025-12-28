@@ -5,9 +5,7 @@ CFLAGS  = -g -Wall -Wextra -Werror
 SRC     = src/main.c \
           src/game_loop.c \
           src/parsing/parser.c \
-          src/parsing/check_map.c \
           src/parsing/rgb_utils.c \
-          src/parsing/parsing_args.c \
           src/parsing/config_parsing.c \
           src/parsing/config_textures.c \
           src/parsing/config_textures_utils.c \

@@ -1,4 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_cleanup.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/26 21:58:21 by bamdjar           #+#    #+#             */
+/*   Updated: 2025/12/28 21:51:44 by bamdjar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
+
+int	handle_texture_config(char *line, t_game_map *game_map)
+{
+	char	**parts;
+	int		result;
+
+	parts = ft_split(line, ' ');
+	if (!validate_texture_parts(parts))
+		return (0);
+	result = store_texture_path(parts[0], parts[1], game_map);
+	free_split_parts(parts);
+	return (result);
+}
 
 void	display_parse_error(char *message)
 {
