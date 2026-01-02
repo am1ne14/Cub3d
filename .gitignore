@@ -1,0 +1,15 @@
+# Object files
+*.o
+
+# Library files
+*.a
+
+# Executable
+cub3D
+
+# macOS
+.DS_Store
+
+# Editor backup files
+*~
+*.swp

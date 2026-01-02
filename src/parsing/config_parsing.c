@@ -74,12 +74,12 @@ static int	process_file_lines(int fd, t_game_map *game_map)
 		{
 			free(line);
 			close(fd);
-			return (0);
+			return (-1);
 		}
 		if (parse_result == 2)
 		{
 			if (!handle_map_start(line, game_map, fd))
-				return (0);
+				return (-1);
 			return (1);
 		}
 		free(line);
@@ -91,6 +91,7 @@ static int	process_file_lines(int fd, t_game_map *game_map)
 int	process_config_file(char *filename, t_game_map *game_map)
 {
 	int	fd;
+	int	result;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -98,9 +99,11 @@ int	process_config_file(char *filename, t_game_map *game_map)
 		display_parse_error("Cannot open file");
 		return (0);
 	}
-	if (!process_file_lines(fd, game_map))
+	result = process_file_lines(fd, game_map);
+	if (result <= 0)
 	{
-		display_parse_error("No map found in file");
+		if (result == 0)
+			display_parse_error("No map found in file");
 		close(fd);
 		return (0);
 	}
