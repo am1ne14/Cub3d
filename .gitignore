@@ -13,3 +13,4 @@ cub3D
 # Editor backup files
 *~
 *.swp
+_codeql_detected_source_root
