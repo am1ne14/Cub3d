@@ -12,11 +12,40 @@
 
 #include "../includes/cub3d.h"
 
+static void	destroy_images(t_mlx *mlx)
+{
+	int	index;
+
+	if (mlx->img_ptr)
+	{
+		mlx_destroy_image(mlx->mlx_ptr, mlx->img_ptr);
+		mlx->img_ptr = NULL;
+	}
+	index = 0;
+	while (index < 4)
+	{
+		if (mlx->textures[index])
+		{
+			mlx_destroy_image(mlx->mlx_ptr, mlx->textures[index]);
+			mlx->textures[index] = NULL;
+		}
+		index++;
+	}
+}
+
 int	close_window(t_mlx *mlx)
 {
-	mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
-	mlx_destroy_display(mlx->mlx_ptr);
-	free(mlx->mlx_ptr);
+	destroy_images(mlx);
+	if (mlx->win_ptr)
+		mlx_destroy_window(mlx->mlx_ptr, mlx->win_ptr);
+	if (mlx->mlx_ptr)
+	{
+		mlx_destroy_display(mlx->mlx_ptr);
+		free(mlx->mlx_ptr);
+		mlx->mlx_ptr = NULL;
+	}
+	if (mlx->game_map)
+		cleanup_game_map(mlx->game_map);
 	exit(0);
 }
 

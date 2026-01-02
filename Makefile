@@ -16,6 +16,7 @@ SRC     = src/main.c \
           src/parsing/parse_cleanup.c \
           src/parsing/parsing_map_init.c \
           src/parsing/map_verification.c \
+          src/parsing/map_validation_utils.c \
           src/parsing/map_loading.c \
           src/init_data/init_mlx.c \
           src/init_data/init_game_map.c \

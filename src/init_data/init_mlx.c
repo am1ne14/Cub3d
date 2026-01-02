@@ -12,24 +12,6 @@
 
 #include "../../includes/cub3d.h"
 
-int	game_loop(t_mlx *mlx)
-{
-	if (mlx->key_w)
-		move_player_forward(mlx);
-	if (mlx->key_s)
-		move_player_backward(mlx);
-	if (mlx->key_a)
-		move_player_left(mlx);
-	if (mlx->key_d)
-		move_player_right(mlx);
-	if (mlx->key_left)
-		rotate_player_left(mlx);
-	if (mlx->key_right)
-		rotate_player_right(mlx);
-	render_frame(mlx);
-	return (0);
-}
-
 static void	init_keys(t_mlx *mlx)
 {
 	mlx->key_w = 0;
@@ -38,6 +20,26 @@ static void	init_keys(t_mlx *mlx)
 	mlx->key_d = 0;
 	mlx->key_left = 0;
 	mlx->key_right = 0;
+}
+
+static void	init_texture_state(t_mlx *mlx)
+{
+	int	index;
+
+	mlx->img_ptr = NULL;
+	mlx->img_data = NULL;
+	index = 0;
+	while (index < 4)
+	{
+		mlx->textures[index] = NULL;
+		mlx->texture_data[index] = NULL;
+		mlx->texture_width[index] = 0;
+		mlx->texture_height[index] = 0;
+		mlx->tex_bits_per_pixel[index] = 0;
+		mlx->tex_line_length[index] = 0;
+		mlx->tex_endian[index] = 0;
+		index++;
+	}
 }
 
 static void	init_window_and_image(t_mlx *mlx)
@@ -71,6 +73,7 @@ void	init_mlx(t_mlx *mlx, t_game_map *game_map)
 	mlx->win_width = SCREEN_WIDTH;
 	mlx->win_height = SCREEN_HEIGHT;
 	mlx->game_map = game_map;
+	init_texture_state(mlx);
 	load_textures(mlx);
 	init_player(mlx, game_map);
 	init_keys(mlx);

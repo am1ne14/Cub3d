@@ -21,5 +21,6 @@ int	main(int arc, char **arv)
 		return (1);
 	init_mlx(&mlx, &game_map);
 	mlx_loop(mlx.mlx_ptr);
+	cleanup_game_map(&game_map);
 	return (0);
 }
