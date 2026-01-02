@@ -1,6 +1,6 @@
 NAME    = cub3D
 CC      = cc
-CFLAGS  = -g -Wall -Wextra -Werror
+CFLAGS  = -Wall -Wextra -Werror
 
 SRC     = src/main.c \
           src/game_loop.c \
@@ -42,6 +42,8 @@ MINILIBX_DIR = /usr/include/minilibx-linux
 
 INCLUDES  = -Iincludes -I$(LIBFT_DIR) -I$(MINILIBX_DIR)
 
+HEADERS = includes/cub3d.h includes/get_next_line.h
+
 LIBS = -L$(MINILIBX_DIR) -lmlx -lXext -lX11 -lm -lz
 
 all: $(NAME)
@@ -49,7 +51,7 @@ all: $(NAME)
 $(NAME): $(OBJ) $(OBJG) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ) $(OBJG) $(LIBFT) $(LIBS) -o $(NAME)
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(LIBFT):
