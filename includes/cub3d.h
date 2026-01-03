@@ -6,7 +6,7 @@
 /*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/09 02:31:34 by mtaybi            #+#    #+#             */
-/*   Updated: 2025/12/28 21:46:32 by bamdjar          ###   ########.fr       */
+/*   Updated: 2026/01/03 18:43:10 by bamdjar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,18 +121,14 @@ typedef struct s_mlx
 	int				key_right;
 }					t_mlx;
 
-/* Parsing functions */
-/* Parsing functions */
 int					parsing(int ac, char *av[], t_game_map *game_map);
 int					validate_arguments(int ac, char **av);
 
-/* Config parsing */
 int					process_config_file(char *filename, t_game_map *game_map);
 int					process_config_line(char *line, t_game_map *game_map);
 int					handle_map_start(char *line, t_game_map *game_map, int fd);
 int					check_all_configs_set(t_game_map *game_map);
 
-/* Texture & Color handlers */
 int					store_texture_path(char *identifier, char *path,
 						t_game_map *game_map);
 int					handle_texture_config(char *line, t_game_map *game_map);
@@ -143,15 +139,12 @@ int					is_texture_identifier(char *line);
 int					is_color_identifier(char *line);
 void				free_split_parts(char **parts);
 
-/* Map parsing */
 int					check_map(char *file);
 int					process_map_data(int fd, t_game_map *game_map);
 int					validate_game_map(t_game_map *game_map);
 int					validate_map_line(char *line, t_game_map *game_map, int y);
 int					check_valid_map_character(char c);
-int					verify_map_boundaries(t_game_map *game_map);
 
-/* Utility functions */
 void				initialize_game_map(t_game_map *game_map);
 void				cleanup_game_map(t_game_map *game_map);
 void				display_parse_error(char *message);
@@ -161,11 +154,9 @@ char				*find_trim_end(char *start);
 char				*copy_trimmed_string(char *start, int len);
 int					convert_rgb_string(char *rgb_str, t_rgb_color *color);
 
-/* Main parsing */
 int					parsing(int ac, char *av[], t_game_map *game_map);
 int					check_map(char *file);
 
-/* MLX functions */
 void				init_mlx(t_mlx *mlx, t_game_map *game_map);
 void				init_player(t_mlx *mlx, t_game_map *game_map);
 void				init_player_north(t_mlx *mlx);
@@ -174,7 +165,6 @@ void				init_player_east(t_mlx *mlx);
 void				init_player_west(t_mlx *mlx);
 void				load_textures(t_mlx *mlx);
 
-/* Rendering functions */
 int					render_frame(t_mlx *mlx);
 void				render_background(t_mlx *mlx);
 void				draw_ceiling(t_mlx *mlx, int x, int y);
@@ -185,14 +175,12 @@ void				put_pixel_to_image(t_mlx *mlx, int x, int y, int color);
 unsigned int		get_texture_color(t_mlx *mlx, int tex_num, int tex_x,
 						int tex_y);
 
-/* Ray calculation functions */
 void				init_ray(t_mlx *mlx, t_ray *ray, int x);
 void				calculate_step_and_side_dist(t_mlx *mlx, t_ray *ray);
 void				perform_dda(t_mlx *mlx, t_ray *ray);
 void				calculate_wall_distance(t_mlx *mlx, t_ray *ray);
 void				calculate_texture_coordinates(t_mlx *mlx, t_ray *ray);
 
-/* Movement functions */
 void				move_player_forward(t_mlx *mlx);
 void				move_player_backward(t_mlx *mlx);
 void				move_player_left(t_mlx *mlx);
@@ -200,13 +188,11 @@ void				move_player_right(t_mlx *mlx);
 void				rotate_player_left(t_mlx *mlx);
 void				rotate_player_right(t_mlx *mlx);
 
-/* Hook functions */
 int					close_window(t_mlx *mlx);
 int					key_press(int keycode, t_mlx *mlx);
 int					key_release(int keycode, t_mlx *mlx);
 int					game_loop(t_mlx *mlx);
 
-/* Utils */
 int					is_wall(t_mlx *mlx, double x, double y);
 
 #endif

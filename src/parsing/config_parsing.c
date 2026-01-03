@@ -12,53 +12,55 @@
 
 #include "../../includes/cub3d.h"
 
-static int	handle_texture_line(char *trimmed_line, t_game_map *game_map)
+static int	is_map_line(char *line)
 {
-	if (!handle_texture_config(trimmed_line, game_map))
-	{
-		free(trimmed_line);
+	int		map_char_found;
+	size_t	i;
+
+	if (!line)
 		return (0);
+	i = 0;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	map_char_found = 0;
+	while (line[i] && line[i] != '\n' && line[i] != '\r')
+	{
+		if (!check_valid_map_character(line[i]))
+			return (0);
+		map_char_found = 1;
+		i++;
 	}
-	return (1);
+	return (map_char_found);
 }
 
-static int	handle_color_line(char *trimmed_line, t_game_map *game_map)
+static int	dispatch_config(char *trimmed_line, int map_hint,
+			t_game_map *game_map)
 {
-	if (!handle_color_config(trimmed_line, game_map))
-	{
-		free(trimmed_line);
-		return (0);
-	}
-	return (1);
+	if (is_texture_identifier(trimmed_line))
+		return (handle_texture_config(trimmed_line, game_map));
+	if (is_color_identifier(trimmed_line))
+		return (handle_color_config(trimmed_line, game_map));
+	if (map_hint || check_all_configs_set(game_map))
+		return (2);
+	display_parse_error("Invalid configuration line");
+	return (0);
 }
 
 int	process_config_line(char *line, t_game_map *game_map)
 {
 	char	*trimmed_line;
+	int		map_hint;
+	int		result;
 
+	map_hint = is_map_line(line);
 	trimmed_line = trim_line_spaces(line);
-	if (!trimmed_line || ft_strlen(trimmed_line) == 0)
-	{
-		free(trimmed_line);
-		return (1);
-	}
-	if (is_texture_identifier(trimmed_line))
-	{
-		if (!handle_texture_line(trimmed_line, game_map))
-			return (0);
-	}
-	else if (is_color_identifier(trimmed_line))
-	{
-		if (!handle_color_line(trimmed_line, game_map))
-			return (0);
-	}
-	else if (check_valid_map_character(trimmed_line[0]))
-	{
-		free(trimmed_line);
-		return (2);
-	}
+	if (!trimmed_line)
+		return (display_parse_error("Memory allocation failed"), 0);
+	if (ft_strlen(trimmed_line) == 0)
+		return (free(trimmed_line), 1);
+	result = dispatch_config(trimmed_line, map_hint, game_map);
 	free(trimmed_line);
-	return (1);
+	return (result);
 }
 
 static int	process_file_lines(int fd, t_game_map *game_map)
@@ -73,7 +75,6 @@ static int	process_file_lines(int fd, t_game_map *game_map)
 		if (parse_result == 0)
 		{
 			free(line);
-			close(fd);
 			return (0);
 		}
 		if (parse_result == 2)
@@ -85,12 +86,13 @@ static int	process_file_lines(int fd, t_game_map *game_map)
 		free(line);
 		line = get_next_line(fd);
 	}
-	return (0);
+	return (-1);
 }
 
 int	process_config_file(char *filename, t_game_map *game_map)
 {
 	int	fd;
+	int	result;
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -98,12 +100,11 @@ int	process_config_file(char *filename, t_game_map *game_map)
 		display_parse_error("Cannot open file");
 		return (0);
 	}
-	if (!process_file_lines(fd, game_map))
-	{
-		display_parse_error("No map found in file");
-		close(fd);
-		return (0);
-	}
+	result = process_file_lines(fd, game_map);
 	close(fd);
-	return (1);
+	if (result == 1)
+		return (1);
+	if (result == -1)
+		display_parse_error("No map found in file");
+	return (0);
 }

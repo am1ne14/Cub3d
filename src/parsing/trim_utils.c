@@ -6,7 +6,7 @@
 /*   By: bamdjar <bamdjar@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/26 21:58:47 by bamdjar           #+#    #+#             */
-/*   Updated: 2025/12/28 21:50:25 by bamdjar          ###   ########.fr       */
+/*   Updated: 2026/01/03 13:40:44 by mohel-am         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	*find_trim_start(char *str)
 	char	*start;
 
 	start = str;
-	while (*start && (*start == ' ' || *start == '\t'))
+	while (*start && (*start == ' ' || *start == '\t'
+			|| *start == '\n' || *start == '\r'))
 		start++;
 	return (start);
 }

@@ -12,55 +12,6 @@
 
 #include "../../includes/cub3d.h"
 
-int	check_valid_map_character(char c)
-{
-	return (c == '0' || c == '1' || c == 'N'
-		|| c == 'S' || c == 'E' || c == 'W' || c == ' ');
-}
-
-static int	is_player_character(char c)
-{
-	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
-}
-
-static int	find_player_position(t_game_map *game_map, int x, int y,
-	char direction)
-{
-	if (game_map->player_count > 0)
-	{
-		display_parse_error("Multiple players found in map");
-		return (0);
-	}
-	game_map->player.pos_x = (double)x + 0.5;
-	game_map->player.pos_y = (double)y + 0.5;
-	game_map->player.facing = direction;
-	game_map->player_count++;
-	return (1);
-}
-
-int	validate_map_line(char *line, t_game_map *game_map, int y)
-{
-	int	x;
-
-	x = 0;
-	while (line[x])
-	{
-		if (!check_valid_map_character(line[x]))
-		{
-			display_parse_error("Invalid character in map");
-			return (0);
-		}
-		if (is_player_character(line[x]))
-		{
-			if (!find_player_position(game_map, x, y, line[x]))
-				return (0);
-			line[x] = '0';
-		}
-		x++;
-	}
-	return (1);
-}
-
 int	check_map(char *file)
 {
 	t_game_map	game_map;

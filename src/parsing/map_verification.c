@@ -12,14 +12,27 @@
 
 #include "../../includes/cub3d.h"
 
+static int	trimmed_len(char *row, int *len)
+{
+	*len = ft_strlen(row);
+	while (*len > 0 && (row[*len - 1] == ' ' || row[*len - 1] == '\t'))
+		(*len)--;
+	if (*len == 0)
+		return (display_parse_error("Empty map row"), 0);
+	return (1);
+}
+
 static int	verify_first_row(t_game_map *game_map)
 {
 	int	x;
 	int	y;
+	int	eff_len;
 
 	y = 0;
+	if (!trimmed_len(game_map->map_grid[y], &eff_len))
+		return (0);
 	x = 0;
-	while (x < (int)ft_strlen(game_map->map_grid[y]))
+	while (x < eff_len)
 	{
 		if (game_map->map_grid[y][x] != '1')
 		{
@@ -35,10 +48,13 @@ static int	verify_last_row(t_game_map *game_map)
 {
 	int	x;
 	int	y;
+	int	eff_len;
 
 	y = game_map->map_height - 1;
+	if (!trimmed_len(game_map->map_grid[y], &eff_len))
+		return (0);
 	x = 0;
-	while (x < (int)ft_strlen(game_map->map_grid[y]))
+	while (x < eff_len)
 	{
 		if (game_map->map_grid[y][x] != '1')
 		{
@@ -54,16 +70,19 @@ static int	verify_side_walls(t_game_map *game_map)
 {
 	int	y;
 	int	len;
+	int	eff_len;
 
 	y = 0;
 	while (y < game_map->map_height)
 	{
+		if (!trimmed_len(game_map->map_grid[y], &eff_len))
+			return (0);
 		if (game_map->map_grid[y][0] != '1')
 		{
 			display_parse_error("First column must be walls");
 			return (0);
 		}
-		len = ft_strlen(game_map->map_grid[y]);
+		len = eff_len;
 		if (len > 0 && game_map->map_grid[y][len - 1] != '1')
 		{
 			display_parse_error("Last column must be walls");
@@ -71,17 +90,6 @@ static int	verify_side_walls(t_game_map *game_map)
 		}
 		y++;
 	}
-	return (1);
-}
-
-int	verify_map_boundaries(t_game_map *game_map)
-{
-	if (!verify_first_row(game_map))
-		return (0);
-	if (!verify_last_row(game_map))
-		return (0);
-	if (!verify_side_walls(game_map))
-		return (0);
 	return (1);
 }
 
@@ -98,7 +106,11 @@ int	validate_game_map(t_game_map *game_map)
 		display_parse_error("Map is too small");
 		return (0);
 	}
-	if (!verify_map_boundaries(game_map))
+	if (!verify_first_row(game_map))
+		return (0);
+	if (!verify_last_row(game_map))
+		return (0);
+	if (!verify_side_walls(game_map))
 	{
 		display_parse_error("Map is not properly enclosed by walls");
 		return (0);

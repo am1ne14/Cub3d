@@ -12,61 +12,60 @@
 
 #include "../../includes/cub3d.h"
 
-static int	init_map_grid(t_game_map *game_map, char *trimmed, int fd)
+static char	*dup_line_keep_spaces(char *line)
+{
+	size_t	len;
+
+	len = 0;
+	while (line[len] && line[len] != '\n' && line[len] != '\r')
+		len++;
+	return (ft_substr(line, 0, len));
+}
+
+static int	init_map_grid(t_game_map *game_map, char *map_line)
 {
 	game_map->map_grid = malloc(sizeof(char *) * 10);
 	if (!game_map->map_grid)
 	{
-		free(trimmed);
-		close(fd);
+		free(map_line);
 		return (0);
 	}
-	if (!validate_map_line(trimmed, game_map, 0))
+	if (!validate_map_line(map_line, game_map, 0))
 	{
-		free(trimmed);
-		close(fd);
+		free(map_line);
 		return (0);
 	}
-	game_map->map_grid[0] = trimmed;
+	game_map->map_grid[0] = map_line;
 	game_map->map_height = 1;
-	game_map->map_width = ft_strlen(trimmed);
-	return (1);
-}
-
-static int	process_first_map_line(char *trimmed, t_game_map *game_map, int fd)
-{
-	if (trimmed && ft_strlen(trimmed) > 0)
-	{
-		if (!init_map_grid(game_map, trimmed, fd))
-			return (0);
-	}
-	else
-	{
-		if (trimmed)
-			free(trimmed);
-	}
+	game_map->map_width = ft_strlen(map_line);
 	return (1);
 }
 
 int	handle_map_start(char *line, t_game_map *game_map, int fd)
 {
-	char	*trimmed;
+	char	*raw_line;
 
 	if (!check_all_configs_set(game_map))
 	{
 		display_parse_error("Missing config parameters");
 		free(line);
-		close(fd);
 		return (0);
 	}
-	trimmed = trim_line_spaces(line);
+	raw_line = dup_line_keep_spaces(line);
 	free(line);
-	if (!process_first_map_line(trimmed, game_map, fd))
+	if (!raw_line)
+	{
+		return (0);
+	}
+	if (ft_strlen(raw_line) == 0)
+	{
+		display_parse_error("Empty map line");
+		free(raw_line);
+		return (0);
+	}
+	if (!init_map_grid(game_map, raw_line))
 		return (0);
 	if (!process_map_data(fd, game_map))
-	{
-		close(fd);
 		return (0);
-	}
 	return (1);
 }

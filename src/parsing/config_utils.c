@@ -24,39 +24,34 @@ void	free_split_parts(char **parts)
 
 int	validate_texture_parts(char **parts)
 {
-	if (!parts || !parts[0] || !parts[1] || parts[2])
-	{
-		display_parse_error("Invalid texture format - should be: "\
-			"[NO|SO|WE|EA] <path>");
-		if (parts)
-			free_split_parts(parts);
-		return (0);
-	}
+	(void)parts;
 	return (1);
 }
 
 int	validate_color_parts(char **parts)
 {
-	if (!parts || !parts[0] || !parts[1] || parts[2])
-	{
-		display_parse_error("Invalid color format - should be: [F|C] R,G,B");
-		if (parts)
-			free_split_parts(parts);
-		return (0);
-	}
+	(void)parts;
 	return (1);
 }
 
 int	is_texture_identifier(char *line)
 {
-	return (ft_strncmp(line, "NO ", 3) == 0
-		|| ft_strncmp(line, "SO ", 3) == 0
-		|| ft_strncmp(line, "WE ", 3) == 0
-		|| ft_strncmp(line, "EA ", 3) == 0);
+	if (!line || ft_strlen(line) < 3)
+		return (0);
+	return ((line[0] == 'N' && line[1] == 'O'
+			&& (line[2] == ' ' || line[2] == '\t'))
+		|| (line[0] == 'S' && line[1] == 'O'
+			&& (line[2] == ' ' || line[2] == '\t'))
+		|| (line[0] == 'W' && line[1] == 'E'
+			&& (line[2] == ' ' || line[2] == '\t'))
+		|| (line[0] == 'E' && line[1] == 'A'
+			&& (line[2] == ' ' || line[2] == '\t')));
 }
 
 int	is_color_identifier(char *line)
 {
-	return (ft_strncmp(line, "F ", 2) == 0
-		|| ft_strncmp(line, "C ", 2) == 0);
+	if (!line || ft_strlen(line) < 2)
+		return (0);
+	return ((line[0] == 'F' && (line[1] == ' ' || line[1] == '\t'))
+		|| (line[0] == 'C' && (line[1] == ' ' || line[1] == '\t')));
 }
