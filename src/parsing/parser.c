@@ -42,11 +42,13 @@ int	parsing(int ac, char *av[], t_game_map *game_map)
 	initialize_game_map(game_map);
 	if (!process_config_file(av[1], game_map))
 	{
+		reset_gnl_stash();
 		cleanup_game_map(game_map);
 		return (0);
 	}
 	if (!validate_game_map(game_map))
 	{
+		reset_gnl_stash();
 		cleanup_game_map(game_map);
 		return (0);
 	}

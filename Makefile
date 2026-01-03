@@ -30,7 +30,8 @@ SRC     = src/main.c \
           src/player_rotation.c
 
 SRCG    = get_next_line/get_next_line.c \
-          get_next_line/get_next_line_utils.c
+          get_next_line/get_next_line_utils.c \
+          get_next_line/get_next_line_stash.c
 
 OBJ     = $(SRC:.c=.o)
 OBJG    = $(SRCG:.c=.o)
