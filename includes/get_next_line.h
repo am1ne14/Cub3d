@@ -36,4 +36,6 @@ int					newline(t_liste *node);
 int					get_line_len(t_liste *node);
 void				free_node(t_liste **node);
 void				finito(int j, t_liste **node, t_liste *new_first);
+t_liste				**get_stash(void);
+void				reset_gnl_stash(void);
 #endif

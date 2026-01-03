@@ -84,19 +84,20 @@ void	free_node(t_liste **node)
 
 char	*get_next_line(int fd)
 {
-	static t_liste	*node;
-	char			*line;
+	t_liste	**node;
+	char	*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	node = get_stash();
 	line = NULL;
-	read_file(fd, &node);
-	if (node == NULL)
+	read_file(fd, node);
+	if (*node == NULL)
 		return (NULL);
-	output(node, &line);
+	output(*node, &line);
 	if (!line)
-		return (free_node(&node), NULL);
-	if (clean(&node) != 1)
+		return (free_node(node), NULL);
+	if (clean(node) != 1)
 		return (free(line), NULL);
 	return (line);
 }
