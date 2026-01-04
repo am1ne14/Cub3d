@@ -32,6 +32,27 @@ void	free_rgb_parts(char **rgb_parts)
 	free(rgb_parts);
 }
 
+static int	is_valid_number(char *str)
+{
+	int	i;
+	int	has_digit;
+
+	i = 0;
+	has_digit = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	while (str[i] && str[i] != ' ' && str[i] != '\t')
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		has_digit = 1;
+		i++;
+	}
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	return (has_digit && str[i] == '\0');
+}
+
 int	validate_rgb_values(char **rgb_parts, int *values)
 {
 	int	i;
@@ -39,6 +60,12 @@ int	validate_rgb_values(char **rgb_parts, int *values)
 	i = 0;
 	while (i < 3)
 	{
+		if (!is_valid_number(rgb_parts[i]))
+		{
+			free_rgb_parts(rgb_parts);
+			display_parse_error("RGB values must be valid numbers");
+			return (0);
+		}
 		values[i] = ft_atoi(rgb_parts[i]);
 		if (values[i] < 0 || values[i] > 255)
 		{
